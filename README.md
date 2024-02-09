@@ -10,3 +10,8 @@ Tech Details:
 - BSV
 - Typescript
 - Atomic Design
+
+
+## System Diagram
+
+![sys_diagram](https://github.com/PriyathamVarma/traceX/blob/main/system-diagram-tracex.drawio.png)
