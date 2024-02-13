@@ -1,10 +1,10 @@
-import Mail from "../page";
+import MailComponent from "../components/templates/mail";
 
 const Dashboard = () => {
   return (
     <div className="flex h-screen bg-white">
       <h1>Dashboard</h1>
-      <Mail />
+      <MailComponent />
     </div>
   );
 };
