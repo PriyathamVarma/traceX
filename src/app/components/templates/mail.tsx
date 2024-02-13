@@ -18,7 +18,7 @@ const MailComponent = () => {
     }
   };
   return (
-    <main className="flex min-h-screen flex-col items-center  p-24 bg-blue-50">
+    <div className="flex min-h-screen flex-col items-center  p-24 bg-blue-50 max-h-24">
       <h1>TRACE X</h1>
 
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -29,7 +29,7 @@ const MailComponent = () => {
           Invite
         </button>
       </form>
-    </main>
+    </div>
   );
 };
 
