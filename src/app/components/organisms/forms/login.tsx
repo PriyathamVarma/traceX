@@ -1,7 +1,49 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import next from "next";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 const LoginForm = () => {
+  const router = useRouter();
+  const session = useSession();
+
+  // State
+  const [error, setError] = useState("");
+  // Side effects
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [session, router]);
+
+  // Methods
+  const formDataHandler = async (e: any) => {
+    e.preventDefault();
+    const tar = e.target;
+
+    // Constant values
+    const email = tar.email.value;
+    const password = tar.password.value;
+
+    console.log(session);
+
+    const res = await signIn("Credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+    if (res?.error) {
+      setError("Invalid credentials");
+      if (res?.url) router.replace("/dashboard");
+    } else {
+      setError("");
+    }
+  };
   return (
     <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -10,7 +52,7 @@ const LoginForm = () => {
             Sign in to your account
           </h2>
         </div>
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={(e) => formDataHandler(e)}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -51,7 +93,7 @@ const LoginForm = () => {
             </button>
           </div>
         </form>
-
+        <p>{error}</p>
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             New user?{" "}
