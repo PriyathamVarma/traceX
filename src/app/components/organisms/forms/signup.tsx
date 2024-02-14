@@ -1,12 +1,26 @@
 "use client";
-// Imports
+
+import React from "react";
+import Link from "next/link";
 import next from "next";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 const SignupForm = () => {
   const router = useRouter();
+  const session = useSession();
+
+  // State
+  const [error, setError] = useState("");
+  // Side effects
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      //router.replace("/dashboard");
+      console.log(" Register ->> Authenticated");
+    }
+  }, [session, router]);
 
   // Methods
   const formDataHandler = async (e: any) => {
@@ -49,8 +63,6 @@ const SignupForm = () => {
                 id="name"
                 name="name"
                 type="text"
-                autoComplete="name"
-                required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Name"
               />
@@ -63,7 +75,6 @@ const SignupForm = () => {
                 id="email-address"
                 name="email"
                 type="email"
-                autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
@@ -77,7 +88,6 @@ const SignupForm = () => {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="new-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"

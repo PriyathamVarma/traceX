@@ -17,7 +17,8 @@ const LoginForm = () => {
   // Side effects
   useEffect(() => {
     if (session?.status === "authenticated") {
-      router.replace("/dashboard");
+      //router.replace("/dashboard");
+      console.log("Login ->> Authenticated");
     }
   }, [session, router]);
 
@@ -32,7 +33,7 @@ const LoginForm = () => {
 
     console.log(session);
 
-    const res = await signIn("Credentials", {
+    const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
@@ -62,7 +63,6 @@ const LoginForm = () => {
                 id="email-address"
                 name="email"
                 type="email"
-                autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
@@ -76,7 +76,6 @@ const LoginForm = () => {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="current-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
@@ -112,12 +111,20 @@ const LoginForm = () => {
             <button
               type="button"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              onClick={() => {
+                signIn("google", {
+                  callbackUrl: "http://localhost:3002/dashboard",
+                });
+              }}
             >
               Gmail
             </button>
             <button
               type="button"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
+              onClick={() => {
+                signIn("github");
+              }}
             >
               GitHub
             </button>
