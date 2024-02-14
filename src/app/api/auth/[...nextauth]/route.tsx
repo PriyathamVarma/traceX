@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { CredentialsProvider } from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { UserProfileModel } from "../../../../../shared/models/user/user_profile";
 import { mongoDB } from "../../../../../shared/utilities/database/mongo";
 
