@@ -7,11 +7,22 @@ import IUserProfile from "../../interfaces/user/user_profile";
 mongoDB();
 
 // For User profile creation
-const UserProfileSchema = new mongoose.Schema<IUserProfile>({
-  name: String,
-  email: String,
-  password: String,
-});
+const UserProfileSchema = new mongoose.Schema<IUserProfile>(
+  {
+    name: String,
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      unique: true,
+      required: false,
+    },
+  },
+  { timestamps: true },
+);
 
 // For User Profile service creation
 export const UserProfileModel =

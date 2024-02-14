@@ -1,4 +1,36 @@
+"use client";
+// Imports
+import next from "next";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 const SignupForm = () => {
+  const router = useRouter();
+
+  // Methods
+  const formDataHandler = async (e: any) => {
+    e.preventDefault();
+    const tar = e.target;
+
+    const enteredFormData = {
+      name: tar.name.value,
+      email: tar.email.value,
+      password: tar.password.value,
+    };
+
+    console.log("Data entered in the form \n", enteredFormData);
+
+    try {
+      const response = await axios.post("/api/v1/user", enteredFormData);
+
+      console.log("Response at sending developer profile data \n", response);
+      router.push("/dashboard");
+    } catch (err) {
+      console.log("Error at sending developer profile data \n", err);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -7,7 +39,7 @@ const SignupForm = () => {
             Create an account
           </h2>
         </div>
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={(e) => formDataHandler(e)}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="name" className="sr-only">

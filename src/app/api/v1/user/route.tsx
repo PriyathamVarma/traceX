@@ -15,18 +15,16 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  console.log("Sending Post Request......................");
-  //const data = await req.json();
-  console.log("..........");
-  //console.log(data);
-
-  const data: IUserProfile = {
-    //name: "varma",
-    email: "priyatham002@gmail.com",
-    //password: "123456",
-  };
-
   try {
+    const data: IUserProfile = await req.json();
+
+    const existingUser = await UserProfileModel.findOne({ email: data.email });
+
+    if (existingUser) {
+      console.log("Error in sending");
+      return new NextResponse("User already exists", { status: 400 });
+    }
+
     const newDeveloperProfileService = new UserProfileModel<IUserProfile>(data);
 
     await newDeveloperProfileService.save();
