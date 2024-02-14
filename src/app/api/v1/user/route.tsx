@@ -21,9 +21,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
   //console.log(data);
 
   const data: IUserProfile = {
-    name: "varma",
+    //name: "varma",
     email: "priyatham002@gmail.com",
-    password: "123456",
+    //password: "123456",
   };
 
   try {

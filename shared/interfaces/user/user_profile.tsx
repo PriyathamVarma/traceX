@@ -12,7 +12,7 @@
  * @example "password123"
  */
 export default interface IUserProfile {
-  name: string;
+  name?: string;
   email: string;
-  password: string;
+  password?: string;
 }
