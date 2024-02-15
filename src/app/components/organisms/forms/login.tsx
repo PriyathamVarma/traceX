@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import next from "next";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -118,15 +117,6 @@ const LoginForm = () => {
               }}
             >
               Gmail
-            </button>
-            <button
-              type="button"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
-              onClick={() => {
-                signIn("github");
-              }}
-            >
-              GitHub
             </button>
           </div>
         </div>

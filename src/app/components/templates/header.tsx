@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
+  const { data: session }: any = useSession();
   return (
     <header className="bg-white shadow py-2 w-full h-26">
       <div className="container mx-auto flex items-center justify-around">
@@ -13,12 +15,22 @@ const Header = () => {
 
         {/* Navigation links */}
         <nav className="hidden lg:flex items-center space-x-8 text-gray-500">
-          <Link
-            href="/dashboard"
-            className="bg-black hover:bg-primary-dark text-white font-bold py-2 px-4 rounded"
-          >
-            Dashboard
-          </Link>
+          {!session ? (
+            <>
+              <p>Logged out</p>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  signOut();
+                }}
+                className="bg-blue-50 p-2 hover:bg-black border hover:text-white border-black rounded-md"
+              >
+                Logout {session.user?.email}
+              </button>
+            </>
+          )}
         </nav>
 
         {/* Mobile menu button */}
