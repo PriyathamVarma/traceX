@@ -106,6 +106,9 @@ const AdminValuesForm = () => {
             required
           >
             <option value="">Select Category</option>
+            <option value="">
+              <input type="text" className="bg-white h-24" />
+            </option>
             <option value="fuel">Fuel</option>
             <option value="bioenergy">Bioenergy</option>
             <option value="refrigerant">Refrigerant</option>
