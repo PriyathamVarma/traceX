@@ -170,8 +170,6 @@ const AdminValuesForm = () => {
             className="block w-full border rounded-md p-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
             required
           >
-            "tonnes", "litres", "kWh (Net CV)", "kWh (Gross CV)", "kg",
-            "litres", "GJ", "km", "miles", "tonee.km",
             <option value="">Select Unit</option>
             <option value="tonnes">Tonnes</option>
             <option value="litres">Litres</option>
