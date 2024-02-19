@@ -6,12 +6,38 @@ import { CarbonEmissionModel } from "../../../../../../shared/models/admin/emiss
 // /api/v1/admin/emissions/
 
 // Response Data
+// Response Data
 type ResponseData = {
   message: string;
+  data?: ICarbonEmissionData[];
+  error?: {
+    message: string;
+    status?: number;
+  };
 };
 
 export async function GET() {
-  return NextResponse.json({ message: "Hello from Next.js!" });
+  try {
+    // Fetch all emission data from MongoDB
+    const allEmissions: ICarbonEmissionData[] = await CarbonEmissionModel.find(
+      {},
+    );
+
+    if (!allEmissions || allEmissions.length === 0) {
+      return NextResponse.json({ message: "No emission data found." });
+    }
+
+    return NextResponse.json<ResponseData>({
+      message: "Emission data fetched successfully.",
+      data: allEmissions,
+    });
+  } catch (error) {
+    console.error("Error fetching emission data:", error);
+    return NextResponse.json({
+      message: "Error fetching emission data.",
+      error: "An unknown error occurred.",
+    });
+  }
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
