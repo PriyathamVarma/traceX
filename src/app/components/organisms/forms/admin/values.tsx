@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const AdminValuesForm = () => {
   const [formData, setFormData] = useState({
@@ -17,11 +18,20 @@ const AdminValuesForm = () => {
     });
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
 
     // Submit form data (replace with your API call or action)
     console.log("Form data:", formData);
+
+    try {
+      const response = await axios.post("/api/v1/admin/emissions/", formData);
+
+      console.log("Response at sending emissions data \n", response);
+      // router.push("/dashboard");
+    } catch (err) {
+      console.log("Error at sending emissions data data \n", err);
+    }
 
     setFormData({
       scope: "",
@@ -139,11 +149,18 @@ const AdminValuesForm = () => {
           className="block w-full border rounded-md p-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
           required
         >
+          "tonnes", "litres", "kWh (Net CV)", "kWh (Gross CV)", "kg", "litres",
+          "GJ", "km", "miles", "tonee.km",
           <option value="">Select Unit</option>
           <option value="tonnes">Tonnes</option>
           <option value="litres">Litres</option>
           <option value="kWh (Net CV)">kWh (Net CV)</option>
           <option value="kWh(Gross CV)">kWh(Gross CV)</option>
+          <option value="kg">KG</option>
+          <option value="GJ">GJ</option>
+          <option value="km">km</option>
+          <option value="miles">miles</option>
+          <option value="tonee.km">tonee.km</option>
         </select>
       </div>
       <div className="mb-6">
