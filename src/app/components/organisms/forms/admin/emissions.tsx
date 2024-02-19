@@ -6,7 +6,9 @@ const AdminValuesForm = () => {
   // State
   const [counter, setCounter] = useState(0);
   const [emissionsList, setEmissionsList] = useState([]);
+  const [emissionsCategoriesList, setEmissionsCategoriesList] = useState([]);
   useEffect(() => {
+    // Emissions
     const fetchEmissionsData = async () => {
       try {
         const response = await axios.get("/api/v1/admin/emissions/");
@@ -18,6 +20,24 @@ const AdminValuesForm = () => {
     };
 
     fetchEmissionsData();
+  }, [counter]);
+
+  useEffect(() => {
+    // Emissions Category
+    const fetchEmissionsCategoryData = async () => {
+      try {
+        const response = await axios.get("/api/v1/admin/emissions/category");
+        setEmissionsCategoriesList(response.data.data); // Update state before re-render
+        console.log(
+          "Emissions data in emissionsCategoriesList:",
+          emissionsCategoriesList,
+        );
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchEmissionsCategoryData();
   }, [counter]);
 
   const [formData, setFormData] = useState({
@@ -67,7 +87,7 @@ const AdminValuesForm = () => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="w-1/2 bg-blue-50 border border-black p-4 justify-center items-center m-2"
+        className="w-96 bg-blue-50 border border-black p-4 justify-center items-center m-2"
       >
         <div className="mb-6">
           <label
@@ -106,9 +126,14 @@ const AdminValuesForm = () => {
             required
           >
             <option value="">Select Category</option>
-            <option value="">
-              <input type="text" className="bg-white h-24" />
-            </option>
+            {emissionsCategoriesList?.map((item: any, index: any) => {
+              return (
+                <option key={index} value={item.category}>
+                  {item.category}
+                </option>
+              );
+            })}
+
             <option value="fuel">Fuel</option>
             <option value="bioenergy">Bioenergy</option>
             <option value="refrigerant">Refrigerant</option>
