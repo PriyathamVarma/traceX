@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { UserProfileModel } from "../../../../../shared/models/user/user_profile";
 import { mongoDB } from "../../../../../shared/utilities/database/mongo";
 
-export const authOptions: any = {
+const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
