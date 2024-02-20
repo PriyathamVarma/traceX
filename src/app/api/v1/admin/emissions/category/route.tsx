@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import ICarbonEmissionDataCategory from "../../../../../../../shared/interfaces/admin/category";
 import { CarbonEmissionCategoryModel } from "../../../../../../../shared/models/admin/category";
 
-// /api/v1/admin/emissions/
+// /api/v1/admin/emissions/category
 
 // Response Data
 // Response Data

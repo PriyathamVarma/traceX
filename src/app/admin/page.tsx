@@ -4,7 +4,9 @@ import { signOut, useSession } from "next-auth/react";
 import AdminValuesForm from "../components/organisms/forms/admin/emissions";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { EmissionsCategoryForm } from "../components/organisms/forms/admin/others";
+import { EmissionsCategoryForm } from "../components/organisms/forms/admin/category";
+import { EmissionsActivityForm } from "../components/organisms/forms/admin/activity";
+import { EmissionsTypeForm } from "../components/organisms/forms/admin/type";
 
 const Admin = () => {
   return (
@@ -17,6 +19,8 @@ const Admin = () => {
         </div>
         <div className="flex flex-col w-1/2">
           <EmissionsCategoryForm />
+          <EmissionsActivityForm />
+          <EmissionsTypeForm />
         </div>
       </div>
     </div>

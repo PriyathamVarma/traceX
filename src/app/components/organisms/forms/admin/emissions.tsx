@@ -7,8 +7,10 @@ const AdminValuesForm = () => {
   const [counter, setCounter] = useState(0);
   const [emissionsList, setEmissionsList] = useState([]);
   const [emissionsCategoriesList, setEmissionsCategoriesList] = useState([]);
+  const [emissionsActivitiesList, setEmissionsActivitiesList] = useState([]);
+  const [emissionsTypesList, setEmissionsTypesList] = useState([]);
+  // Emissions
   useEffect(() => {
-    // Emissions
     const fetchEmissionsData = async () => {
       try {
         const response = await axios.get("/api/v1/admin/emissions/");
@@ -22,8 +24,8 @@ const AdminValuesForm = () => {
     fetchEmissionsData();
   }, [counter]);
 
+  // Emissions Category
   useEffect(() => {
-    // Emissions Category
     const fetchEmissionsCategoryData = async () => {
       try {
         const response = await axios.get("/api/v1/admin/emissions/category");
@@ -38,6 +40,42 @@ const AdminValuesForm = () => {
     };
 
     fetchEmissionsCategoryData();
+  }, [counter]);
+
+  // Emissions Activity
+  useEffect(() => {
+    const fetchEmissionsActivityData = async () => {
+      try {
+        const response = await axios.get("/api/v1/admin/emissions/activity");
+        setEmissionsActivitiesList(response.data.data); // Update state before re-render
+        console.log(
+          "Emissions data in emissionsActivitiesList:",
+          emissionsCategoriesList,
+        );
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchEmissionsActivityData();
+  }, [counter]);
+
+  // Types Activity
+  useEffect(() => {
+    const fetchEmissionsTypeData = async () => {
+      try {
+        const response = await axios.get("/api/v1/admin/emissions/type");
+        setEmissionsTypesList(response.data.data); // Update state before re-render
+        console.log(
+          "Emissions data in emissionsTypesList:",
+          emissionsCategoriesList,
+        );
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchEmissionsTypeData();
   }, [counter]);
 
   const [formData, setFormData] = useState({
@@ -60,8 +98,8 @@ const AdminValuesForm = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    // Submit form data (replace with your API call or action)
-    console.log("Form data:", formData);
+    // // Submit form data (replace with your API call or action)
+    // console.log("Form data:", formData);
 
     try {
       const response = await axios.post("/api/v1/admin/emissions/", formData);
@@ -82,6 +120,8 @@ const AdminValuesForm = () => {
       value: "",
     });
   };
+
+  console.log(emissionsActivitiesList);
 
   return (
     <div>
@@ -133,10 +173,6 @@ const AdminValuesForm = () => {
                 </option>
               );
             })}
-
-            <option value="fuel">Fuel</option>
-            <option value="bioenergy">Bioenergy</option>
-            <option value="refrigerant">Refrigerant</option>
           </select>
         </div>
         <div className="mb-6">
@@ -155,10 +191,13 @@ const AdminValuesForm = () => {
             required
           >
             <option value="">Select Activity</option>
-            <option value="gaseous fuels">Gaseous Fuels</option>
-            <option value="liquid fuels">Liquid Fuels</option>
-            <option value="solid fuels">Solid Fuels</option>
-            <option value="biofuel">Biofuel</option>
+            {emissionsActivitiesList?.map((item: any, index: any) => {
+              return (
+                <option key={index} value={item.activity}>
+                  {item.activity}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="mb-6">
@@ -177,6 +216,13 @@ const AdminValuesForm = () => {
             required
           >
             <option value="">Select Type</option>
+            {emissionsTypesList?.map((item: any, index: any) => {
+              return (
+                <option key={index} value={item.category}>
+                  {item.type}
+                </option>
+              );
+            })}
             <option value="Butane">Butane</option>
             <option value="CNG">CNG</option>
             <option value="LNG">LNG</option>
