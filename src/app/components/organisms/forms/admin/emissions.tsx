@@ -223,10 +223,6 @@ const AdminValuesForm = () => {
                 </option>
               );
             })}
-            <option value="Butane">Butane</option>
-            <option value="CNG">CNG</option>
-            <option value="LNG">LNG</option>
-            <option value="LPG">LPG</option>
           </select>
         </div>
         <div className="mb-6">
