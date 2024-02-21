@@ -19,7 +19,7 @@ export default async function RootLayout({
     <html lang="en">
       <UserProvider>
         <body className={inter.className}>
-          <div className="bg-gray-100">{children}</div>s
+          <div className="bg-gray-100">{children}</div>
         </body>
       </UserProvider>
     </html>

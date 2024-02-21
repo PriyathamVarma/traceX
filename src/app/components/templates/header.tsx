@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { BasicLink } from "../atoms/links/basic";
+import { CiSearch } from "react-icons/ci";
+import { CiBellOn } from "react-icons/ci";
+import { CiSettings } from "react-icons/ci";
+import pfp from "../../../../public/images/main.png";
 
 const Header = () => {
   const { user, error, isLoading } = useUser();
@@ -10,39 +16,47 @@ const Header = () => {
   console.log("Loading \n", isLoading);
 
   return (
-    <header className="bg-white shadow py-2 w-full h-26">
-      <div className="container mx-auto flex items-center justify-around">
+    <header className="bg-black shadoww-full h-18 flex flex-row py-2">
+      <div className="container mx-auto flex items-center justify-center space-x-2">
         {/* Logo and company name */}
         <div className="flex items-center">
-          <Link href="/">Verdascope</Link>
+          <Link href="/" className="text-white">
+            Verdascope
+          </Link>
         </div>
+        <BasicLink title="Home" link="/" />
+        <BasicLink title="Dashboard" link="/dashboard" />
 
         {/* Navigation links */}
-        <nav className="hidden lg:flex items-center space-x-8 text-gray-500">
+        {/*<nav className="hidden lg:flex items-center space-x-8 text-gray-500">
           {user != undefined ? (
             <Link href="/api/auth/logout">Logout {user.name}</Link>
           ) : (
             <Link href="/api/auth/login">Login</Link>
           )}
-        </nav>
-
-        {/* Mobile menu button */}
-        <button className="lg:hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 p-2">
-          <svg
-            className="w-6 h-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
+          </nav>*/}
+      </div>
+      <div className="container mx-auto flex items-center justify-around"></div>
+      <div className="container mx-auto flex items-center justify-around">
+        {/* Logo and company name */}
+        <div className="flex items-center justify-center space-x-1">
+          <Link href="/" className="bg-white p-2 rounded-sm">
+            <CiSearch />
+          </Link>
+          <Link href="/" className="bg-white p-2 rounded-sm">
+            <CiSettings />
+          </Link>
+          <Link href="/" className="bg-white p-2 rounded-sm">
+            <CiBellOn />
+          </Link>
+          <Image
+            src={pfp}
+            width={30}
+            height={20}
+            alt="Pfp"
+            className="bg-white rounded-full"
+          />
+        </div>
       </div>
     </header>
   );

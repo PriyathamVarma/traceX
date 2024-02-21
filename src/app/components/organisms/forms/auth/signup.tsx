@@ -5,13 +5,17 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
-const LoginForm = () => {
+const SignupForm = () => {
   const router = useRouter();
+  const { user, isLoading } = useUser();
+  console.log("user \n", user);
+
+  console.log("Loading \n", isLoading);
 
   // State
   const [error, setError] = useState("");
-  // Side effects
 
   // Methods
   const formDataHandler = async (e: any) => {
@@ -21,82 +25,86 @@ const LoginForm = () => {
     // Constant values
     const email = tar.email.value;
     const password = tar.password.value;
+  };
+  return (
+    <div className="flex items-center justify-center bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-96 space-y-8">
+        <div>
+          <h2 className="mt-6 text-left text-4xl font-extrabold">Signup</h2>
+          <h3 className="mt-6 text-left text-xl font-medium">
+            Enter your details.
+          </h3>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={(e) => formDataHandler(e)}>
+          <div className="mb-4 space-y-2">
+            <label className="block text-white text-sm mb-1" htmlFor="name">
+              Name*
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="name"
+              type="name"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div className="mb-4 space-y-2">
+            <label className="block text-white text-sm mb-1" htmlFor="email">
+              Email*
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+            />
+          </div>
 
-    return (
-      <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
+          <div className="mb-4 space-y-2">
+            <label className="block text-white text-sm mb-1" htmlFor="password">
+              Password*
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+            />
+            <p className="text-xs">Must be atleast 8 characters</p>
+          </div>
+
           <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Sign in to your account
-            </h2>
-          </div>
-          <form className="mt-8 space-y-6" onSubmit={(e) => formDataHandler(e)}>
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-          <p>{error}</p>
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
-              New user?{" "}
-              <Link
-                href="/register"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Create an account
-              </Link>
-            </p>
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-full text-black bg-indigo-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Get started
+            </button>
           </div>
 
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">Or sign in with:</p>
-            <div className="mt-1 grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-              >
-                Gmail
-              </button>
-            </div>
+          <div>
+            <Link
+              href="/api/auth/login"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-full text-black bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Sign up with Google
+            </Link>
           </div>
+        </form>
+        <p>{error}</p>
+        <div className="mt-4 text-center">
+          <p className="text-sm  text-green-200">
+            Already have an acccount?{" "}
+            <Link
+              href="/auth/login"
+              className="font-medium text-green-200 hover:text-indigo-500 underline"
+            >
+              Log in
+            </Link>
+          </p>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
 };
 
-export default LoginForm;
+export default SignupForm;

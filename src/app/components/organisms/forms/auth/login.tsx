@@ -84,12 +84,12 @@ const LoginForm = () => {
           </div>
 
           <div>
-            <button
-              type="submit"
+            <Link
+              href="/api/auth/login"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-full text-black bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Sign up with Google
-            </button>
+              Sign in with Google
+            </Link>
           </div>
         </form>
         <p>{error}</p>
@@ -97,8 +97,8 @@ const LoginForm = () => {
           <p className="text-sm  text-green-200">
             New user?{" "}
             <Link
-              href="/register"
-              className="font-medium text-green-200 hover:text-indigo-500"
+              href="/auth/signup"
+              className="font-medium text-green-200 hover:text-indigo-500 underline"
             >
               Create an account
             </Link>
