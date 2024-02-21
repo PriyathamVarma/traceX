@@ -16,7 +16,7 @@ const Footer = () => {
   console.log("Loading \n", isLoading);
 
   return (
-    <footer className="bg-black shadoww-full h-48 flex flex-col py-2 px-4 space-y-10">
+    <footer className="bg-black shadow-full h-48 flex flex-col py-2 px-4 space-y-10 fixed bottom-0 left-0 right-0">
       <div className="flex items-left justify-left text-white">
         <h1>Verdascope</h1>
       </div>
