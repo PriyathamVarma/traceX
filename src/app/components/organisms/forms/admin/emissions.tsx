@@ -250,6 +250,7 @@ const AdminValuesForm = () => {
             <option value="km">km</option>
             <option value="miles">miles</option>
             <option value="tonee.km">tonee.km</option>
+            <option value="cubic metres">cubic metres</option>
           </select>
         </div>
         <div className="mb-6">
