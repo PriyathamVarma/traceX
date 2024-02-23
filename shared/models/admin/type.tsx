@@ -18,5 +18,5 @@ const CarbonEmissionTypeSchema = new mongoose.Schema<ICarbonEmissionDataType>(
 
 // Model export
 export const CarbonEmissionTypeModel =
-  mongoose.models.CarbonEmissionTypeActivity ||
+  mongoose.models.CarbonEmissionType ||
   mongoose.model("CarbonEmissionType", CarbonEmissionTypeSchema);

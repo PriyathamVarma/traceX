@@ -64,7 +64,7 @@ const AdminValuesForm = () => {
   useEffect(() => {
     const fetchEmissionsTypeData = async () => {
       try {
-        const response = await axios.get("/api/v1/admin/emissions/type");
+        const response = await axios.get("/api/v1/admin/emissions/emtypes");
         setEmissionsTypesList(response.data.data); // Update state before re-render
         console.log(
           "Emissions data in emissionsTypesList:",
@@ -121,7 +121,7 @@ const AdminValuesForm = () => {
     });
   };
 
-  console.log(emissionsActivitiesList);
+  console.log(emissionsList);
 
   return (
     <div>
@@ -243,8 +243,8 @@ const AdminValuesForm = () => {
             <option value="">Select Unit</option>
             <option value="tonnes">Tonnes</option>
             <option value="litres">Litres</option>
-            <option value="kWh (Net CV)">kWh (Net CV)</option>
-            <option value="kWh(Gross CV)">kWh(Gross CV)</option>
+            <option value="kWh (Net CV)">kWh Net CV</option>
+            <option value="kWh (Gross CV)">kWh Gross CV</option>
             <option value="kg">KG</option>
             <option value="GJ">GJ</option>
             <option value="km">km</option>

@@ -9,9 +9,6 @@ import pfp from "../../../public/images/main.png";
 
 const Dashboard = () => {
   const { user, error, isLoading } = useUser();
-  console.log("user \n", user);
-  console.log("Error \n", error);
-  console.log("Loading \n", isLoading);
 
   return (
     <div className="flex flex-col h-screen bg-green-100 relative">
