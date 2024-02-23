@@ -121,7 +121,18 @@ const AdminValuesForm = () => {
     });
   };
 
-  console.log(emissionsList);
+  const deleteField = async (id: any) => {
+    console.log(id);
+    try {
+      const response = await axios.delete(`/api/v1/admin/emissions/?id=${id}`);
+      setCounter(counter + 1);
+
+      console.log("Response at deleting emissions data \n", response);
+      // router.push("/dashboard");
+    } catch (err) {
+      console.log("Error at deleting emissions data data \n", err);
+    }
+  };
 
   return (
     <div>
@@ -277,31 +288,92 @@ const AdminValuesForm = () => {
           Submit
         </button>
       </form>
-
-      {emissionsList
-        ?.slice()
-        .reverse()
-        .map((item: any, index: number) => {
-          return (
-            <div
-              key={index}
-              className="flex flex-col gap-2 bg-white shadow rounded p-4 border border-black w-2/3 hover:bg-gray-400 hover:text-white"
-            >
-              <h2 className="text-2xl font-bold text-gray-800 ">
-                Scope : {item.scope}
-              </h2>
-              <div className="flex flex-col gap-1 text-gray-600">
-                <p>Category: {item.category}</p>
-                <p>Activity: {item.activity}</p>
-                <p>Type: {item.type}</p>
-                <p>Units: {item.units}</p>
-                <p>
-                  Value: {item.value} {item.units}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+      {/*Table*/}
+      <div className="bg-blue-50">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50 font-bold">
+            <tr>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Scope
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Category
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Activity
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Type
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Units
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Value
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Delete
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-green-50 divide-y divide-gray-200">
+            {emissionsList
+              ?.slice()
+              .reverse()
+              .map((item: any, index: number) => (
+                <tr key={index} className="hover:bg-blue-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {item.scope}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {item.category}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {item.activity}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {item.type}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {item.units}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {item.value} {item.units}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <button
+                      className="bg-red-100 p-2"
+                      onClick={() => deleteField(item._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

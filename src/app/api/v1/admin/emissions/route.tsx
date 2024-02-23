@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
 import ICarbonEmissionData from "../../../../../../shared/interfaces/admin/emissions";
 import { CarbonEmissionModel } from "../../../../../../shared/models/admin/emissions";
+import { mongoDB } from "../../../../../../shared/utilities/database/mongo";
 
 // /api/v1/admin/emissions/
 
@@ -55,6 +56,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } catch (error) {
     return NextResponse.json({
       error: "Error at Emissions Data \n",
+    });
+  }
+}
+
+export async function DELETE(req: NextRequest, res: NextResponse) {
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+
+    console.log("ID:", id);
+    await CarbonEmissionModel.findByIdAndDelete(id);
+
+    return NextResponse.json<ResponseData>({
+      message: "Succesfully deleted Emissions Data",
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Error at deleting Emissions Data \n",
+      error,
     });
   }
 }
