@@ -283,6 +283,7 @@ const AdminValuesForm = () => {
             <option value="">Select Unit</option>
             <option value="tonnes">Tonnes</option>
             <option value="litres">Litres</option>
+            <option value="kWh">kWh</option>
             <option value="kWh (Net CV)">kWh Net CV</option>
             <option value="kWh (Gross CV)">kWh Gross CV</option>
             <option value="kg">KG</option>
