@@ -9,20 +9,49 @@ const AdminValuesForm = () => {
   const [emissionsCategoriesList, setEmissionsCategoriesList] = useState([]);
   const [emissionsActivitiesList, setEmissionsActivitiesList] = useState([]);
   const [emissionsTypesList, setEmissionsTypesList] = useState([]);
-  // Emissions
+
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
-    const fetchEmissionsData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get("/api/v1/admin/emissions/");
-        setEmissionsList(response.data.data); // Update state before re-render
-        console.log("Emissions data in setEmissionsList:", emissionsList);
-      } catch (err) {
-        console.error("Error fetching data:", err);
+        const response = await axios.get(
+          `/api/v1/admin/emissions?page=${currentPage}`,
+        );
+        setEmissionsList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching emissions:", error);
       }
     };
 
-    fetchEmissionsData();
-  }, [counter]);
+    fetchData();
+  }, [currentPage, counter]);
+
+  // Pagination functions
+  const nextPage = () => setCurrentPage(currentPage + 1);
+  const prevPage = () => setCurrentPage(currentPage - 1);
+
+  // Render pagination buttons
+  const renderPagination = () => (
+    <div className="flex items-center justify-center mt-4 bg-gray-50 border border-black p-2">
+      <button
+        onClick={prevPage}
+        disabled={currentPage === 1}
+        className={`mr-2 px-4 py-2 rounded-lg bg-gray-200 ${
+          currentPage === 1 && "cursor-not-allowed"
+        }`}
+      >
+        Previous
+      </button>
+      <span className="text-gray-600 text-lg mx-4">Page {currentPage}</span>
+      <button
+        onClick={nextPage}
+        className="ml-2 px-4 py-2 rounded-lg bg-gray-200"
+      >
+        Next
+      </button>
+    </div>
+  );
 
   // Emissions Category
   useEffect(() => {
@@ -289,6 +318,8 @@ const AdminValuesForm = () => {
         </button>
       </form>
       {/*Table*/}
+      {/* Pagination */}
+      {renderPagination()}
       <div className="bg-blue-50">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 font-bold">
@@ -338,39 +369,36 @@ const AdminValuesForm = () => {
             </tr>
           </thead>
           <tbody className="bg-green-50 divide-y divide-gray-200">
-            {emissionsList
-              ?.slice()
-              .reverse()
-              .map((item: any, index: number) => (
-                <tr key={index} className="hover:bg-blue-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {item.scope}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.category}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.activity}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.type}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.units}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.value} {item.units}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      className="bg-red-100 p-2"
-                      onClick={() => deleteField(item._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {emissionsList.map((item: any, index: number) => (
+              <tr key={index} className="hover:bg-blue-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {item.scope}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {item.category}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {item.activity}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {item.type}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {item.units}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {item.value} {item.units}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button
+                    className="bg-red-100 p-2"
+                    onClick={() => deleteField(item._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

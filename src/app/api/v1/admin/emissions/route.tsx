@@ -17,12 +17,17 @@ type ResponseData = {
   };
 };
 
-export async function GET() {
+export async function GET(req: NextRequest, res: NextResponse) {
   try {
     // Fetch all emission data from MongoDB
     const allEmissions: ICarbonEmissionData[] = await CarbonEmissionModel.find(
       {},
     );
+
+    //const { page = 1 } = req.query;
+    const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
+    const skip = (page - 1) * 10;
+    const emissions = await CarbonEmissionModel.find().skip(skip).limit(10);
 
     if (!allEmissions || allEmissions.length === 0) {
       return NextResponse.json({ message: "No emission data found." });
@@ -30,7 +35,7 @@ export async function GET() {
 
     return NextResponse.json<ResponseData>({
       message: "Emission data fetched successfully.",
-      data: allEmissions,
+      data: emissions,
     });
   } catch (error) {
     console.error("Error fetching emission data:", error);
