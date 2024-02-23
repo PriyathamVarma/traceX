@@ -24,7 +24,7 @@ export const EmissionsTypeForm = () => {
 
     try {
       const response = await axios.post(
-        "/api/v1/admin/emissions/type/",
+        "/api/v1/admin/emissions/emtypes/",
         formData,
       );
 
