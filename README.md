@@ -3,7 +3,7 @@
 ```
 
 Project: Trace X
-Description: Data availability platform for carbon data emissions
+Description: Data availability platform for carbon data emissions.
 Owner: Isabel
 Developer: Back3nd
 
@@ -16,7 +16,6 @@ Tech Stack:💻
 * Server Side
 
 - Mongo DB
-- BSV
 
 * General
 
@@ -26,7 +25,7 @@ Tech Stack:💻
 * Third Party
 
 - Sendgrid(Email notifications)
-- NextAuth(For authentication)
+- Auth0(For authentication)
 
 * Deployment
 
