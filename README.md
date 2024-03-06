@@ -2,7 +2,7 @@
 
 ```
 
-Project: Trace X
+Project: Trace X ~ Verdascope
 Description: Data availability platform for carbon data emissions.
 Owner: Isabel
 Developer: Back3nd
