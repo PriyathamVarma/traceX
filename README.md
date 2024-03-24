@@ -16,6 +16,7 @@ Tech Stack:💻
 * Server Side
 
 - Mongo DB
+- Supabase
 
 * General
 
