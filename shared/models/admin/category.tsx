@@ -13,6 +13,10 @@ const CarbonEmissionCategorySchema =
         type: String,
         required: true,
       },
+      scope: {
+        type: String,
+        required: true,
+      },
     },
     { timestamps: true }, // Include timestamps for auditing
   );

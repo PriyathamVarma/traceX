@@ -6,7 +6,28 @@ export const EmissionsActivityForm = () => {
 
   const [formData, setFormData] = useState({
     activity: "",
+    category: "",
   });
+
+  const [emissionsCategoriesList, setEmissionsCategoriesList] = useState([]);
+
+  // Emissions Category
+  useEffect(() => {
+    const fetchEmissionsCategoryData = async () => {
+      try {
+        const response = await axios.get("/api/v1/admin/emissions/category");
+        setEmissionsCategoriesList(response.data.data); // Update state before re-render
+        console.log(
+          "Emissions data in emissionsCategoriesList:",
+          emissionsCategoriesList,
+        );
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchEmissionsCategoryData();
+  }, []);
 
   // Methods
   const handleChange = (event: any) => {
@@ -33,10 +54,6 @@ export const EmissionsActivityForm = () => {
     } catch (err) {
       console.log("Error at sending emissions activity data \n", err);
     }
-
-    // setFormData({
-    //   category: "",
-    // });
   };
 
   return (
@@ -63,6 +80,30 @@ export const EmissionsActivityForm = () => {
             required
           />
         </div>
+
+        <label
+          htmlFor="category"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Category
+        </label>
+        <select
+          id="category"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="block w-full border rounded-md p-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
+          required
+        >
+          <option value="">Select Category</option>
+          {emissionsCategoriesList?.map((item: any, index: any) => {
+            return (
+              <option key={index} value={item.category}>
+                {item.category}
+              </option>
+            );
+          })}
+        </select>
 
         <button
           type="submit"

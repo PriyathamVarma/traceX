@@ -6,6 +6,7 @@ export const EmissionsCategoryForm = () => {
 
   const [formData, setFormData] = useState({
     category: "",
+    scope: "",
   });
 
   // Methods
@@ -57,12 +58,30 @@ export const EmissionsCategoryForm = () => {
             type="text"
             id="category"
             name="category"
+            placeholder="Fuels"
             value={formData.category}
             onChange={handleChange}
             className="block w-full border rounded-md p-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
             required
           />
         </div>
+        <label
+          htmlFor="scope"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Scope
+        </label>
+
+        <input
+          type="string"
+          id="scope"
+          name="scope"
+          placeholder="1 or 2 or 3"
+          value={formData.scope}
+          onChange={handleChange}
+          className="block w-full border rounded-md p-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
+          required
+        />
 
         <button
           type="submit"

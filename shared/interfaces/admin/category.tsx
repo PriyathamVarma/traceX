@@ -4,7 +4,11 @@
  *
  * @property category - The emission category (fuel, bioenergy, or refrigerant).
  * @example "fuel", "bioenergy", or "refrigerant"
+ *
+ * @property scope - The scope of the category
+ * @example 1 or 2 or 3
  */
 export default interface ICarbonEmissionDataCategory {
   category: string;
+  scope: string;
 }
