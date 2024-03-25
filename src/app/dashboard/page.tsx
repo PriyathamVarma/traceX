@@ -7,6 +7,11 @@ import Link from "next/link";
 import Image from "next/image";
 import pfp from "../../../public/images/main.png";
 import RequestCard from "../components/organisms/cards/requestCard";
+import RequestEmissionsCard from "../components/organisms/cards/requestEmissionsCard";
+import EmissionsScopeCard from "../components/organisms/cards/emissionsScopeCard";
+import InboxCard from "../components/organisms/cards/inboxCard";
+import ActivityCard from "../components/organisms/cards/ActivityCard";
+import MessageCard from "../components/organisms/cards/MessageCard";
 
 const Dashboard = () => {
   const { user, error, isLoading } = useUser();
@@ -14,57 +19,24 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col h-screen bg-background6  relative">
       <Header />
-      <div className="py-8 px-24">
+      <div className="py-8 px-12">
         <h1 className="font-extrabold text-lg text-background1">
           Hello {user?.name}
         </h1>
         <p className="font-medium text-sm text-background1">
           Your daily summary
         </p>
-        <div className=" mt-4 flex flex-row space-x-8 bg-red-50">
-          <div className="space-y-2 bg-red-200">
+        <div className=" mt-4 flex flex-row space-x-8">
+          <div className="space-y-2  w-2/3">
             <RequestCard />
-            <div className="bg-white flex flex-col overflow-x-auto rounded-md h-48 p-2 px-8 space-y-1">
-              <h1 className="font-bold">Campaigns</h1>
-              <div className="flex flex-row space-x-2">
-                <div className="bg-blue-50 w-48 h-24 rounded-md flex items-center justify-center">
-                  Card 1
-                </div>
-                <div className="bg-blue-50 w-48 h-24 rounded-md flex items-center justify-center">
-                  Card 2
-                </div>
-                <div className="bg-blue-50 w-48 h-24 rounded-md flex items-center justify-center">
-                  Card 3
-                </div>
-              </div>
-              <hr />
-              <button className="border border-gray-100 rounded-lg float-right text-xs w-1/3 p-2 -px-4 hover:bg-gray-50">
-                Manage Account
-              </button>
-            </div>
+            <RequestEmissionsCard />
+            <EmissionsScopeCard />
           </div>
 
-          <div className="border bg-white p-2 w-auto min-w-96 px-8 space-y-2 rounded-md">
-            <h1 className="font-bold">Activity</h1>
-
-            <div className="flex flex-row hover:bg-gray-50 space-x-2">
-              <Image
-                src={pfp}
-                height={20}
-                width={20}
-                alt="list 1"
-                className="rounded-full"
-              />
-              <div className="text-xs">
-                <p>Name</p>
-                <p>
-                  Invited to{" "}
-                  <span className="text-indigo-300 hover:underline">
-                    Report #123
-                  </span>
-                </p>
-              </div>
-            </div>
+          <div className=" w-1/3  space-y-2 ">
+            <InboxCard />
+            <ActivityCard />
+            <MessageCard />
           </div>
         </div>
       </div>

@@ -8,8 +8,8 @@ const RequestCard = () => {
       </div>
       <div className="flex flex-row">
         <div className="w-2/3">
-          <h1>Jaguar</h1>
-          <p>
+          <h1 className="text-lg font-extrabold">Jaguar</h1>
+          <p className="text-sm">
             Jaguar requested help completing Scope 1 and Scope 2 Data in
             relation to your energy consumption associated with their product.
             They are interested in the emissions data between January 2023 and
