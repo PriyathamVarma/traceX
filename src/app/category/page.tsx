@@ -6,24 +6,21 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import Image from "next/image";
 import pfp from "../../../public/images/main.png";
-import RequestCard from "../components/organisms/cards/requestCard";
 
-const Dashboard = () => {
+const Category = () => {
   const { user, error, isLoading } = useUser();
 
   return (
-    <div className="flex flex-col h-screen bg-background6  relative">
+    <div className="flex flex-col h-screen bg-green-100 relative">
       <Header />
       <div className="py-8 px-24">
-        <h1 className="font-extrabold text-lg text-background1">
-          Hello {user?.name}
-        </h1>
-        <p className="font-medium text-sm text-background1">
-          Your daily summary
-        </p>
-        <div className=" mt-4 flex flex-row space-x-8 bg-red-50">
-          <div className="space-y-2 bg-red-200">
-            <RequestCard />
+        <h1 className="font-extrabold text-lg">Hello {user?.name}</h1>
+        <p className="font-medium text-sm">Your daily summary</p>
+        <div className=" mt-4 flex flex-row space-x-8">
+          <div className="space-y-2">
+            <div className=" bg-white rounded-md h-48 min-w-96 p-2 w-auto px-8">
+              Report graph
+            </div>
             <div className="bg-white flex flex-col overflow-x-auto rounded-md h-48 p-2 px-8 space-y-1">
               <h1 className="font-bold">Campaigns</h1>
               <div className="flex flex-row space-x-2">
@@ -69,8 +66,9 @@ const Dashboard = () => {
         </div>
       </div>
       {/* <MailComponent /> */}
+      <Footer />
     </div>
   );
 };
 
-export default Dashboard;
+export default Category;

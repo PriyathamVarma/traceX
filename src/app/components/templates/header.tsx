@@ -7,7 +7,8 @@ import { BasicLink } from "../atoms/links/basic";
 import { CiSearch } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
-import pfp from "../../../../public/images/main.png";
+import logo from "../../../../public/images/VERDASCOPE.png";
+import pfp from "../../../../public/images/Avatar.png";
 
 const Header = () => {
   const { user, error, isLoading } = useUser();
@@ -16,25 +17,16 @@ const Header = () => {
   console.log("Loading \n", isLoading);
 
   return (
-    <header className="bg-black shadoww-full h-18 flex flex-row py-2">
+    <header className="bg-background6 shadow-full h-18 flex flex-row py-2 w-full">
       <div className="container mx-auto flex items-center justify-center space-x-2">
         {/* Logo and company name */}
         <div className="flex items-center">
           <Link href="/" className="text-white">
-            Verdascope
+            <Image src={logo} alt="logo" />
           </Link>
         </div>
-        <BasicLink title="Home" link="/" />
-        <BasicLink title="Dashboard" link="/dashboard" />
 
-        {/* Navigation links */}
-        {/*<nav className="hidden lg:flex items-center space-x-8 text-gray-500">
-          {user != undefined ? (
-            <Link href="/api/auth/logout">Logout {user.name}</Link>
-          ) : (
-            <Link href="/api/auth/login">Login</Link>
-          )}
-          </nav>*/}
+        <BasicLink title="Dashboard" link="/dashboard" />
       </div>
       <div className="container mx-auto flex items-center justify-around"></div>
       <div className="container mx-auto flex items-center justify-around">
@@ -48,6 +40,9 @@ const Header = () => {
           </Link>
           <Link href="/" className="bg-white p-2 rounded-sm">
             <CiBellOn />
+          </Link>
+          <Link href="/auth/login" className="bg-white p-2 rounded-sm text-xs">
+            Login
           </Link>
           <Image
             src={pfp}
