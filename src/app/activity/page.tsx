@@ -16,6 +16,7 @@ const ActivityPage = () => {
   const [emissionsActivitiesList, setEmissionsActivitiesList] = useState<any>(
     [],
   );
+  const [selectedActivity, setSelectedActivity] = useState<any>(null);
 
   const [year, setYear] = useState("2024");
 
@@ -25,6 +26,7 @@ const ActivityPage = () => {
       try {
         const response = await axios.get("/api/v1/admin/emissions/activity");
         setEmissionsActivitiesList(response.data.data);
+        console.log(response.data.data);
       } catch (err) {
         console.error("Error fetching data:", err);
       }
@@ -46,6 +48,11 @@ const ActivityPage = () => {
     return activities.filter(
       (activity) => activity.category === selectedCategory,
     );
+  };
+
+  // Function to handle click on activity
+  const handleActivityClick = (activity: any) => {
+    setSelectedActivity(selectedActivity === activity ? null : activity);
   };
 
   return (
@@ -95,12 +102,16 @@ const ActivityPage = () => {
                     <>
                       <div
                         key={index}
+                        onClick={() => handleActivityClick(item)}
                         className="bg-background2 text-black font-bold m-2 p-4 rounded-md flex flex-row justify-between"
                       >
                         <p>{item.activity}</p>
                         <p>{">"}</p>
                       </div>
-                      <ActivityForm />
+                      {selectedActivity &&
+                        selectedActivity._id === item._id && (
+                          <ActivityForm data={item} />
+                        )}
                     </>
                   );
                 },
