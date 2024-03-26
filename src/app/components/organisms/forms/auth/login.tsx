@@ -11,15 +11,40 @@ const LoginForm = () => {
 
   // State
   const [error, setError] = useState("");
+  const [status, setStatus] = useState("Login");
 
   // Methods
   const formDataHandler = async (e: any) => {
     e.preventDefault();
     const tar = e.target;
+    setStatus("Logging in");
 
     // Constant values
     const email = tar.email.value;
     const password = tar.password.value;
+    setStatus("Logging in.");
+    console.log(email, password);
+
+    try {
+      setStatus("Logging in..");
+
+      const response = await axios.post("/api/v1/user/login", {
+        email: email,
+        password: password,
+      });
+
+      console.log("Succesfully logged in \n", response);
+
+      if (response.status === 200) {
+        router.push(`/dashboard?email=${email}`);
+      }
+
+      setStatus("Login");
+    } catch (err) {
+      alert("Error in logging in");
+      console.log("Error in logging in \n", err);
+      setStatus("Login");
+    }
   };
   return (
     <div className="flex items-center justify-center bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -79,10 +104,11 @@ const LoginForm = () => {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-full text-black bg-indigo-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Login
+              {status}
             </button>
           </div>
 
+          {/*
           <div>
             <Link
               href="/api/auth/login"
@@ -90,7 +116,8 @@ const LoginForm = () => {
             >
               Sign in with Google
             </Link>
-          </div>
+          </div> 
+          */}
         </form>
         <p>{error}</p>
         <div className="mt-4 text-center">

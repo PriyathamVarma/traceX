@@ -10,24 +10,21 @@ type ResponseData = {
   message: string;
 };
 
-export async function GET() {
-  return NextResponse.json({ message: "Hello from Verdsacope" });
+export async function GET(req: NextRequest, res: NextResponse) {
+  return new NextResponse("No good in using this route :)");
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    console.log("1");
     const data: IUserProfile = await req.json();
-    console.log("2", data);
 
     // Ensure password is provided
     if (!data.password) {
       return new NextResponse("Password is required", { status: 400 });
     }
-    console.log("3");
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(data?.password, 10);
-    console.log("4", hashedPassword);
 
     const existingUser = await UserProfileModel.findOne({ email: data.email });
 
