@@ -5,26 +5,47 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useUser } from "@auth0/nextjs-auth0/client";
+//import { useUser } from "@auth0/nextjs-auth0/client";
 
 const SignupForm = () => {
   const router = useRouter();
-  const { user, isLoading } = useUser();
-  console.log("user \n", user);
-
-  console.log("Loading \n", isLoading);
+  //const { user, isLoading } = useUser();
 
   // State
   const [error, setError] = useState("");
+  const [start, setStart] = useState("Getting started");
 
   // Methods
   const formDataHandler = async (e: any) => {
+    setStart("Creating account");
     e.preventDefault();
     const tar = e.target;
 
     // Constant values
+    const name = tar.name.value;
     const email = tar.email.value;
     const password = tar.password.value;
+
+    console.log(name, email, password);
+
+    try {
+      const response = await axios.post("/api/v1/user/", {
+        name: name,
+        email: email,
+        password: password,
+      });
+
+      console.log("Succesfully created account", response.status);
+
+      setStart("Create Account");
+      if (response.status === 200) {
+        router.push("/");
+      }
+    } catch (err) {
+      console.log("Error in getting user details", err);
+      alert("Error in creating account.Try again");
+      setStart("Create Account");
+    }
   };
   return (
     <div className="flex items-center justify-center bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -45,6 +66,7 @@ const SignupForm = () => {
               id="name"
               type="name"
               placeholder="Enter your name"
+              required
             />
           </div>
           <div className="mb-4 space-y-2">
@@ -56,6 +78,7 @@ const SignupForm = () => {
               id="email"
               type="email"
               placeholder="Enter your email"
+              required
             />
           </div>
 
@@ -68,6 +91,7 @@ const SignupForm = () => {
               id="password"
               type="password"
               placeholder="Enter your password"
+              required
             />
             <p className="text-xs">Must be atleast 8 characters</p>
           </div>
@@ -77,18 +101,18 @@ const SignupForm = () => {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-full text-black bg-indigo-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Get started
+              {start}
             </button>
           </div>
 
-          <div>
+          {/* <div>
             <Link
               href="/api/auth/login"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-full text-black bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Sign up with Google
             </Link>
-          </div>
+  </div>*/}
         </form>
         <p>{error}</p>
         <div className="mt-4 text-center">
