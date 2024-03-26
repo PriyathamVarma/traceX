@@ -97,7 +97,7 @@ const AdminValuesForm = () => {
         setEmissionsTypesList(response.data.data); // Update state before re-render
         console.log(
           "Emissions data in emissionsTypesList:",
-          emissionsCategoriesList,
+          emissionsTypesList,
         );
       } catch (err) {
         console.error("Error fetching data:", err);

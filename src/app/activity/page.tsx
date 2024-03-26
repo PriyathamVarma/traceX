@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import ActivityForm from "../components/organisms/forms/data/activityForm";
 import Header from "../components/templates/header";
 
 const ActivityPage = () => {
@@ -92,14 +93,14 @@ const ActivityPage = () => {
                 (item: any, index: number) => {
                   return (
                     <>
-                      <Link
-                        href={`/activity?category=${item.category}`}
+                      <div
                         key={index}
                         className="bg-background2 text-black font-bold m-2 p-4 rounded-md flex flex-row justify-between"
                       >
                         <p>{item.activity}</p>
                         <p>{">"}</p>
-                      </Link>
+                      </div>
+                      <ActivityForm />
                     </>
                   );
                 },
