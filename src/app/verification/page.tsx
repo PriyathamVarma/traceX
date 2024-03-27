@@ -22,7 +22,10 @@ const VerificationPage = () => {
         </h1>
         <hr />
         <div className=" mt-12 flex flex-row px-8 py-4 space-x-2">
-          <div className="bg-white h-48 w-1/2 flex flex-col rounded-md">
+          <Link
+            href="/report"
+            className="bg-white h-48 w-1/2 flex flex-col rounded-md"
+          >
             <div className="bg-background6 items-center justify-center flex h-2/3 rounded-t-md">
               <Image src={left} height={60} width={60} alt="left image" />
             </div>
@@ -30,7 +33,7 @@ const VerificationPage = () => {
               <p>Self-verification</p>
               <p>{">"}</p>
             </div>
-          </div>
+          </Link>
           <div className="bg-white h-48 w-1/2 flex flex-col rounded-md">
             <div className="bg-background6 items-center justify-center flex h-2/3 rounded-t-md">
               <Image src={right} height={60} width={60} alt="right image" />

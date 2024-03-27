@@ -3,10 +3,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import IDataByProvider from "../../../../../../shared/interfaces/data/dataByProvider";
 import { useUser } from "../../../../../../shared/context/userContext";
+import { useRouter } from "next/navigation";
 
 const ActivityForm = (props: any) => {
   const data = props.data;
   const scope = props.scope;
+
+  const router = useRouter();
 
   const { user } = useUser();
 
@@ -15,6 +18,7 @@ const ActivityForm = (props: any) => {
   // State
   const [emissionsTypesList, setEmissionsTypesList] = useState([]);
   const [isProvider, setIsProvider] = useState(false);
+  const [status, setStatus] = useState("Submit");
   const [formData, setFormData] = useState<any>({
     userId: (user as any)._id,
     mainUserId: "",
@@ -88,9 +92,38 @@ const ActivityForm = (props: any) => {
   };
 
   // Form handler
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setStatus("Submitting");
     console.log("Form data \n", formData);
+    try {
+      const response = await axios.post("/api/v1/data", {
+        userId: formData.userId,
+        mainUserId: formData.mainUserId,
+        mainUserName: formData.mainUserName,
+        category: formData.category, // Fuel
+        scope: formData.scope, // 1 or 2 or 3
+        activity: formData.activity, // Gaseous Fuel
+        type: formData.type, // Butane
+        units: formData.units, // tonnes
+        totalConsumption: formData.totalConsumption,
+        methodology: formData.methodology,
+        verification: formData.verification, // self-verification
+        from: formData.from,
+        to: formData.to,
+      });
+
+      console.log("Succesful in saving provider data \n", response);
+      if (response.status === 200) {
+        alert("Data saved");
+        setStatus("Submitted");
+        router.push("/verification");
+      }
+    } catch (err: any) {
+      alert(err.response.data);
+      console.log("Error in saving the data", err.response.data);
+    }
+    setStatus("Submit");
   };
 
   return (
@@ -235,7 +268,7 @@ const ActivityForm = (props: any) => {
             type="submit"
             className="bg-background4 px-6 text-xs py-2 rounded-full"
           >
-            Submit
+            {status}
           </button>
         </div>
       </form>
