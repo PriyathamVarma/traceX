@@ -7,8 +7,10 @@ import Header from "../components/templates/header";
 const ProviderPage = () => {
   const [status, setStatus] = useState("Submit");
   const { user } = useUser();
+  console.log("-------------\n", user?._id);
+
   const [formData, setFormData] = useState<any>({
-    userId: (user as any)._id,
+    userId: user?._id || "",
     userName: user?.name,
     role: "provider",
     email: "",

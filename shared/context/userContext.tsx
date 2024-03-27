@@ -2,9 +2,16 @@
 import React, { createContext, useContext, useState } from "react";
 import IUserProfile from "../interfaces/user/user_profile";
 
+interface ILoggedinUser {
+  _id: string;
+  name?: string;
+  email: string;
+  password?: string;
+}
+
 const UserContext = createContext<{
-  user: IUserProfile | null;
-  login: (userData: IUserProfile) => void;
+  user: ILoggedinUser | null;
+  login: (userData: ILoggedinUser) => void;
   logout: () => void;
 }>({
   user: null,
@@ -13,7 +20,7 @@ const UserContext = createContext<{
 });
 
 export const UserProvider = ({ children }: any) => {
-  const [user, setUser] = useState<IUserProfile | null>(() => {
+  const [user, setUser] = useState<ILoggedinUser | null>(() => {
     if (typeof localStorage !== "undefined") {
       const storedUser = localStorage.getItem("user");
       return storedUser ? JSON.parse(storedUser) : null;
@@ -22,7 +29,7 @@ export const UserProvider = ({ children }: any) => {
     }
   });
 
-  const login = (userData: IUserProfile) => {
+  const login = (userData: ILoggedinUser) => {
     setUser(userData);
     if (typeof localStorage !== "undefined") {
       localStorage.setItem("user", JSON.stringify(userData));

@@ -30,7 +30,7 @@ const ReportPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-full bg-green-100 relative space-y-2">
+    <div className="flex flex-col h-full min-h-screen bg-green-100 relative space-y-2">
       <Header />
 
       <div className="py-8 px-24 flex flex-col space-y-2">
@@ -54,6 +54,8 @@ const ReportPage = () => {
             </thead>
             <tbody className="bg-white">
               {providerDataList.map((item: any, index: number) => {
+                const fromDate = new Date(item.from);
+                const toDate = new Date(item.to);
                 return (
                   <tr key={index}>
                     <td className="p-2 border border-background1">
@@ -72,7 +74,17 @@ const ReportPage = () => {
                       {item.totalConsumption}
                     </td>
                     <td className="p-2 border border-background1">
-                      {item.from} - {item.to}
+                      {fromDate.toLocaleDateString("en-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "numeric",
+                      })}{" "}
+                      -{" "}
+                      {toDate.toLocaleDateString("en-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "numeric",
+                      })}
                     </td>
                     <td className="p-2 border border-background1">
                       Self-verification

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ActivityForm from "../components/organisms/forms/data/activityForm";
 import Header from "../components/templates/header";
+import { Suspense } from "react";
 
 const ActivityPage = () => {
   const searchParams = useSearchParams();
@@ -124,4 +125,10 @@ const ActivityPage = () => {
   );
 };
 
-export default ActivityPage;
+const SuspendedActivityPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <ActivityPage />
+  </Suspense>
+);
+
+export default SuspendedActivityPage;
