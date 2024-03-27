@@ -12,16 +12,26 @@ import InboxCard from "../components/organisms/cards/inboxCard";
 import ActivityCard from "../components/organisms/cards/ActivityCard";
 import MessageCard from "../components/organisms/cards/MessageCard";
 import { useUser } from "../../../shared/context/userContext";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const { user } = useUser();
 
   console.log("Logged in user details : \n", user);
+
+  // useEffect
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
+
   return (
     <div className="flex flex-col h-screen bg-background6  relative">
       <Header />
       <div className="py-8 px-12">
-        <h1 className="font-extrabold text-lg text-background1">Hello</h1>
+        <h1 className="font-extrabold text-lg text-background1">
+          Hello {user?.name}
+        </h1>
         <p className="font-medium text-sm text-background1">
           Your daily summary
         </p>
