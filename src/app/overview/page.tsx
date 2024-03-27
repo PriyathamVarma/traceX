@@ -8,8 +8,8 @@ const Overview = () => {
       <Header />
       <div className="py-8 px-12 space-y-4">
         <InfoCard />
-        <ScopeCard name="Scope 1" link="/scope1" status="ready" />
-        <ScopeCard name="Scope 2" link="/scope2" status="ready" />
+        <ScopeCard name="Scope 1" link="/scope" status="ready" />
+        <ScopeCard name="Scope 2" link="/scope" status="ready" />
         <ScopeCard name="Scope 3" link="/" status="Coming Soon" />
       </div>
     </div>

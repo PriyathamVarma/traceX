@@ -14,7 +14,7 @@ const Header = () => {
   // User Details
   const { user, logout } = useUser();
 
-  console.log("logged in user details : \n", user);
+  // console.log("logged in user details : \n", user);
 
   //Methods
   const clickHandler = () => {

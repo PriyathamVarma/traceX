@@ -30,7 +30,7 @@ const ProviderPage = () => {
     e.preventDefault();
     setStatus("Submitting...");
 
-    /*try {
+    try {
       const response = await axios.post("/api/v1/email", {
         userId: formData.userId,
         userName: formData.userName,
@@ -42,7 +42,7 @@ const ProviderPage = () => {
     } catch (err) {
       alert("Couldnt send information to provider");
       console.log("Error in sending to provider", err);
-    }*/
+    }
 
     // Stroing provider information
     setStatus("Storing");

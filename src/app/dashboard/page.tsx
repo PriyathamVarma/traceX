@@ -12,18 +12,42 @@ import InboxCard from "../components/organisms/cards/inboxCard";
 import ActivityCard from "../components/organisms/cards/ActivityCard";
 import MessageCard from "../components/organisms/cards/MessageCard";
 import { useUser } from "../../../shared/context/userContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Dashboard = () => {
   const { user } = useUser();
+  const [isProvider, setIsProvider] = useState(false);
 
-  // console.log("Logged in user details : \n", user);
+  const [providerData, setProviderData] = useState<any>(null);
 
-  // useEffect
+  // useEffect -> fetching provider details
 
   useEffect(() => {
     console.log(user);
-  }, []);
+    const fetchProvider = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/user/provider/?email=${user?.email}`,
+        );
+
+        console.log(
+          "Succesful in getting provider details",
+          response.data.data,
+        );
+        if (response.status === 200) {
+          setIsProvider(true);
+          setProviderData(response.data.data);
+        }
+      } catch (err) {
+        console.log("Error in  getting provider details");
+        setIsProvider(false);
+      }
+    };
+
+    fetchProvider();
+    console.log("Provider data \n", providerData);
+  }, [isProvider]);
 
   return (
     <div className="flex flex-col h-screen bg-background6  relative">
@@ -37,7 +61,14 @@ const Dashboard = () => {
         </p>
         <div className=" mt-4 flex flex-row space-x-8">
           <div className="space-y-2  w-2/3">
-            <RequestCard />
+            {providerData !== null ? (
+              <>
+                <RequestCard data={providerData} />
+              </>
+            ) : (
+              <></>
+            )}
+
             <RequestEmissionsCard />
             <EmissionsScopeCard />
           </div>

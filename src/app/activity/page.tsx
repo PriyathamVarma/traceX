@@ -10,6 +10,7 @@ const ActivityPage = () => {
   const searchParams = useSearchParams();
 
   const category = searchParams.get("category");
+  const scope = searchParams.get("scope");
 
   console.log(category);
 
@@ -62,7 +63,7 @@ const ActivityPage = () => {
       <div className="py-8 px-24 flex flex-col space-y-2">
         <hr />
         <h1 className="font-extrabold text-lg flex justify-center items-center">
-          {category}
+          {category} - Scope {scope}
         </h1>
         <hr />
         <div className="flex items-center justify-center space-x-4">

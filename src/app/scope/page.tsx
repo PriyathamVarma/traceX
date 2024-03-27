@@ -42,7 +42,7 @@ const ScopePage = () => {
       <div className="py-8 px-24 flex flex-col space-y-2">
         <hr />
         <h1 className="font-extrabold text-lg flex justify-center items-center">
-          Scope 1
+          Scope {scope}
         </h1>
         <hr />
         <div className="flex items-center justify-center space-x-4">
@@ -72,7 +72,7 @@ const ScopePage = () => {
               return (
                 <>
                   <Link
-                    href={`/activity?category=${item.category}`}
+                    href={`/activity?category=${item.category}&scope=${scope}`}
                     key={index}
                     className="bg-background2 text-black font-bold m-2 p-4 rounded-md flex flex-row justify-between"
                   >

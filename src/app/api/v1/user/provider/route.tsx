@@ -8,16 +8,17 @@ import IProvider from "../../../../../../shared/interfaces/user/provider";
 // Response Data
 type ResponseData = {
   message: string;
-  data: string | IProvider[];
+  data: IProvider;
 };
 
 export async function GET(req: NextRequest, res: NextResponse) {
+  const searchParams = req.nextUrl.searchParams;
   try {
-    const { email } = await req.json();
-    const providers = await ProviderProfileModel.find({ email: email });
+    const email = searchParams.get("email");
+    const provider = await ProviderProfileModel.findOne({ email: email });
     return NextResponse.json<ResponseData>({
       message: "Successfully fetched providers",
-      data: providers,
+      data: provider,
     });
   } catch (error) {
     return NextResponse.json({
