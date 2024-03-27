@@ -5,17 +5,22 @@ import IDataByProvider from "../../../../../shared/interfaces/data/dataByProvide
 // ->> /api/v1/data
 
 // Response Data
-type ResponseData = {
+type ResponseDataByOne = {
   message: string;
   data: IDataByProvider | null;
+};
+
+type ResponseDataByAll = {
+  message: string;
+  data: IDataByProvider[] | null;
 };
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const searchParams = req.nextUrl.searchParams;
   try {
     const userId = searchParams.get("userId");
-    const providerData = await ProviderDataModel.findOne({ userId: userId });
-    return NextResponse.json<ResponseData>({
+    const providerData = await ProviderDataModel.find({ userId: userId });
+    return NextResponse.json<ResponseDataByAll>({
       message: "Successfully fetched provider data",
       data: providerData,
     });
@@ -48,7 +53,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const newProviderData = new ProviderDataModel(data);
     await newProviderData.save();
 
-    return NextResponse.json<ResponseData>({
+    return NextResponse.json<ResponseDataByOne>({
       message: "Successfully created provider data",
       data: newProviderData,
     });

@@ -3,11 +3,34 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useUser } from "../../../shared/context/userContext";
 import Header from "../components/templates/header";
 
 const ReportPage = () => {
+  const { user } = useUser();
+
+  const [providerDataList, setProviderDataList] = useState<any>([]);
+
+  useEffect(() => {
+    const getProviderData = async () => {
+      try {
+        const res = await axios.get(`/api/v1/data?userId=${(user as any)._id}`);
+
+        console.log("Successfully fetched providers data \n", res.data.data);
+
+        if (res.status === 200) {
+          setProviderDataList(res.data.data);
+        }
+      } catch (err) {
+        console.log("Error in fetching provider data list \n", err);
+      }
+    };
+
+    getProviderData();
+  }, []);
+
   return (
-    <div className="flex flex-col h-screen bg-green-100 relative space-y-2">
+    <div className="flex flex-col h-full bg-green-100 relative space-y-2">
       <Header />
 
       <div className="py-8 px-24 flex flex-col space-y-2">
@@ -22,6 +45,7 @@ const ReportPage = () => {
               <tr className="text-sm">
                 <th className="p-2 border border-white">Scope</th>
                 <th className="p-2 border border-white">Activity</th>
+                <th className="p-2 border border-white">Category</th>
                 <th className="p-2 border border-white">Emission Source</th>
                 <th className="p-2 border border-white">Kg CO2e</th>
                 <th className="p-2 border border-white">Timeframe</th>
@@ -29,30 +53,33 @@ const ReportPage = () => {
               </tr>
             </thead>
             <tbody className="bg-white">
-              <tr>
-                <td className="p-2 border border-background1">Scope 1</td>
-                <td className="p-2 border border-background1">Fuels</td>
-                <td className="p-2 border border-background1">LNG</td>
-                <td className="p-2 border border-background1">2500</td>
-                <td className="p-2 border border-background1">
-                  01.01.23 - 31.03.23
-                </td>
-                <td className="p-2 border border-background1">
-                  Self-verification
-                </td>
-              </tr>
-              <tr>
-                <td className="p-2 border border-background1">Scope 1</td>
-                <td className="p-2 border border-background1">Fuels</td>
-                <td className="p-2 border border-background1">LNG</td>
-                <td className="p-2 border border-background1">2500</td>
-                <td className="p-2 border border-background1">
-                  01.01.23 - 31.03.23
-                </td>
-                <td className="p-2 border border-background1">
-                  Self-verification
-                </td>
-              </tr>
+              {providerDataList.map((item: any, index: number) => {
+                return (
+                  <tr key={index}>
+                    <td className="p-2 border border-background1">
+                      {item.scope}
+                    </td>
+                    <td className="p-2 border border-background1">
+                      {item.activity}
+                    </td>
+                    <td className="p-2 border border-background1">
+                      {item.category}
+                    </td>
+                    <td className="p-2 border border-background1">
+                      {item.type}
+                    </td>
+                    <td className="p-2 border border-background1">
+                      {item.totalConsumption}
+                    </td>
+                    <td className="p-2 border border-background1">
+                      {item.from} - {item.to}
+                    </td>
+                    <td className="p-2 border border-background1">
+                      Self-verification
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

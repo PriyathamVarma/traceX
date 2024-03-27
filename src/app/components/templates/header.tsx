@@ -9,16 +9,19 @@ import { CiSettings } from "react-icons/ci";
 import logo from "../../../../public/images/VERDASCOPE.png";
 import pfp from "../../../../public/images/Avatar.png";
 import { useUser } from "../../../../shared/context/userContext";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   // User Details
   const { user, logout } = useUser();
+  const router = useRouter();
 
   // console.log("logged in user details : \n", user);
 
   //Methods
   const clickHandler = () => {
     logout();
+    router.push("/");
   };
 
   return (
