@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 // Response Data
 type ResponseData = {
   message: string;
+  data: string;
 };
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -43,6 +44,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     return NextResponse.json<ResponseData>({
       message: "Succesfully created User Profile",
+      data: existingUser,
     });
   } catch (error) {
     return NextResponse.json({

@@ -9,6 +9,7 @@ import bcrypt from "bcrypt";
 // Response Data
 type ResponseData = {
   message: string;
+  data: string;
 };
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -50,6 +51,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     // Passwords match, user authenticated
     return NextResponse.json<ResponseData>({
       message: "User authenticated",
+      data: existingUser,
     });
   } catch (error) {
     return NextResponse.json({

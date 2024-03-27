@@ -5,10 +5,13 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useUser } from "../../../../../../shared/context/userContext";
 
 const LoginForm = () => {
   const router = useRouter();
+  const { login } = useUser();
 
+  console.log(login);
   // State
   const [error, setError] = useState("");
   const [status, setStatus] = useState("Login");
@@ -36,6 +39,8 @@ const LoginForm = () => {
       console.log("Succesfully logged in \n", response);
 
       if (response.status === 200) {
+        const userData = response.data.data;
+        login(userData);
         router.push(`/dashboard?email=${email}`);
       }
 

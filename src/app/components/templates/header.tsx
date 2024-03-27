@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { BasicLink } from "../atoms/links/basic";
 import { CiSearch } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
@@ -11,11 +10,6 @@ import logo from "../../../../public/images/VERDASCOPE.png";
 import pfp from "../../../../public/images/Avatar.png";
 
 const Header = () => {
-  const { user, error, isLoading } = useUser();
-  console.log("user \n", user);
-  console.log("Error \n", error);
-  console.log("Loading \n", isLoading);
-
   return (
     <header className="bg-background6 shadow-full h-18 flex flex-row py-2 w-full">
       <div className="container mx-auto flex items-center justify-center space-x-2">

@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "./components/templates/header";
-import { UseUser } from "@auth0/nextjs-auth0/dist/client/use-user";
+//import { UseUser } from "@auth0/nextjs-auth0/dist/client/use-user";
 
 const Home = () => {
   return (

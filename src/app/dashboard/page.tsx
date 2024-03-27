@@ -2,7 +2,6 @@
 import Footer from "../components/templates/footer";
 import Header from "../components/templates/header";
 import MailComponent from "../components/templates/mail";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import Image from "next/image";
 import pfp from "../../../public/images/main.png";
@@ -12,17 +11,17 @@ import EmissionsScopeCard from "../components/organisms/cards/emissionsScopeCard
 import InboxCard from "../components/organisms/cards/inboxCard";
 import ActivityCard from "../components/organisms/cards/ActivityCard";
 import MessageCard from "../components/organisms/cards/MessageCard";
+import { useUser } from "../../../shared/context/userContext";
 
 const Dashboard = () => {
-  const { user, error, isLoading } = useUser();
+  const { user } = useUser();
 
+  console.log("Logged in user details : \n", user);
   return (
     <div className="flex flex-col h-screen bg-background6  relative">
       <Header />
       <div className="py-8 px-12">
-        <h1 className="font-extrabold text-lg text-background1">
-          Hello {user?.name}
-        </h1>
+        <h1 className="font-extrabold text-lg text-background1">Hello</h1>
         <p className="font-medium text-sm text-background1">
           Your daily summary
         </p>
