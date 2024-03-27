@@ -1,20 +1,67 @@
 import ComingSoon from "@/app/components/atoms/buttons/ComingSoon";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import IDataByProvider from "../../../../../../shared/interfaces/data/dataByProvider";
+import { useUser } from "../../../../../../shared/context/userContext";
 
 const ActivityForm = (props: any) => {
   const data = props.data;
+  const scope = props.scope;
+
+  const { user } = useUser();
 
   console.log("Props data in activity form \n", data);
 
+  // State
   const [emissionsTypesList, setEmissionsTypesList] = useState([]);
+  const [isProvider, setIsProvider] = useState(false);
+  const [formData, setFormData] = useState<any>({
+    userId: (user as any)._id,
+    mainUserId: "",
+    mainUserName: "",
+    category: data?.category, // Fuel
+    scope: scope, // 1 or 2 or 3
+    activity: data?.activity, // Gaseous Fuel
+    type: "", // Butane
+    units: "", // tonnes
+    totalConsumption: 0,
+    methodology: "",
+    verification: "self-verification", // self-verification
+    from: "",
+    to: "",
+  });
 
-  const [fuelType, setFuelType] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [unit, setUnit] = useState("");
-  const [totalConsumption, setTotalConsumption] = useState("");
-  const [consumptionPercentage, setConsumptionPercentage] = useState("");
+  const [providerData, setProviderData] = useState<any>(null);
+
+  // useEffect -> fetching provider details
+
+  useEffect(() => {
+    console.log(user);
+    const fetchProvider = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/user/provider/?email=${user?.email}`,
+        );
+
+        console.log(
+          "Succesful in getting provider details",
+          response.data.data,
+        );
+        if (response.status === 200) {
+          setIsProvider(true);
+          setProviderData(response.data.data);
+          formData.mainUserId = response.data.data.userId;
+          formData.mainUserName = response.data.data.userName;
+        }
+      } catch (err) {
+        console.log("Error in  getting provider details");
+        setIsProvider(false);
+      }
+    };
+
+    fetchProvider();
+    console.log("Provider data \n", providerData);
+  }, [isProvider]);
 
   // Types Activity
   useEffect(() => {
@@ -34,38 +81,39 @@ const ActivityForm = (props: any) => {
     fetchEmissionsTypeData();
   }, []);
 
+  // Form change handler
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   // Form handler
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    // Form submission logic here
-    console.log("Form submitted:", {
-      fuelType,
-      startDate,
-      endDate,
-      unit,
-      totalConsumption,
-      consumptionPercentage,
-    });
-    // You can make an API call to submit the data to your backend here
+    console.log("Form data \n", formData);
   };
 
   return (
     <div className=" bg-background1 rounded-md flex items-center justify-center">
-      <form className="w-2/3 flex flex-col space-y-4 p-6 rounded-md ">
+      <form
+        className="w-2/3 flex flex-col space-y-4 p-6 rounded-md "
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col w-full">
-          <label
-            htmlFor="fuelType"
-            className="text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="type" className="text-sm font-medium text-gray-700">
             Fuel Type for {data.activity}
           </label>
           <select
-            id="fuelType"
+            id="type"
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
             className="rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-background3"
+            required
           >
             <option value="">Select Fuel Type</option>
             {emissionsTypesList?.map((item: any, index: any) => (
-              <option key={index} value={item.category}>
+              <option key={index} value={item.type}>
                 {item.type}
               </option>
             ))}
@@ -75,21 +123,29 @@ const ActivityForm = (props: any) => {
           <p>Select time frame</p>
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
-              <label>From</label>
+              <label htmlFor="from">From</label>
               <input
                 type="date"
-                value={startDate}
+                id="from"
+                name="from"
+                value={formData.from}
+                onChange={handleChange}
                 className="rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 flex-1"
-                placeholder="Start Date (DD/MM/YYYY)"
+                placeholder="End Date (DD/MM/YYYY)"
+                required
               />
             </div>
             <div className="flex flex-col">
-              <label>To</label>
+              <label htmlFor="to">To</label>
               <input
                 type="date"
-                value={endDate}
+                id="to"
+                name="to"
+                value={formData.to}
+                onChange={handleChange}
                 className=" rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 flex-1"
                 placeholder="End Date (DD/MM/YYYY)"
+                required
               />
             </div>
           </div>
@@ -100,6 +156,9 @@ const ActivityForm = (props: any) => {
           </label>
           <select
             id="units"
+            name="units"
+            value={formData.units}
+            onChange={handleChange}
             className="block w-full border rounded-md p-2 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"
             required
           >
@@ -119,14 +178,17 @@ const ActivityForm = (props: any) => {
         </div>
         <div className="w-full flex flex-col">
           <label
-            htmlFor="consumption"
+            htmlFor="totalConsumption"
             className="text-sm font-medium text-gray-700"
           >
             Total energy consumption of your business
           </label>
           <input
             type="number"
-            id="consumption"
+            id="totalConsumption"
+            name="totalConsumption"
+            value={formData.totalConsumption}
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
             placeholder="Enter value"
           />
@@ -160,6 +222,9 @@ const ActivityForm = (props: any) => {
           </label>
           <textarea
             id="methodolgy"
+            name="methodology"
+            value={formData.methodology}
+            onChange={handleChange}
             rows={4}
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
             placeholder="Enter Methodology"

@@ -12,8 +12,6 @@ const ActivityPage = () => {
   const category = searchParams.get("category");
   const scope = searchParams.get("scope");
 
-  console.log(category);
-
   const [emissionsActivitiesList, setEmissionsActivitiesList] = useState<any>(
     [],
   );
@@ -111,7 +109,7 @@ const ActivityPage = () => {
                       </div>
                       {selectedActivity &&
                         selectedActivity._id === item._id && (
-                          <ActivityForm data={item} />
+                          <ActivityForm data={item} scope={scope} />
                         )}
                     </>
                   );
