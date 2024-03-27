@@ -30,7 +30,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   <p>${userName} requested help completing Scope 1 and Scope 2 Data in relation to your energy consumption associated with their product. They are interested in the emissions data between ${from} and ${to}. </p>
   <p>Ready to get started? Click the button below to accept your invitation.</p>
   <a href="${process.env.vercelLink}" class="accept-button">Accept Invitation</a>
-  <p>Already have an account? <a href="your-login-link.com">Log in here.</a></p>
+  <p>Already have an account? <a href="${process.env.vercelLink}">Log in here.</a></p>
 </div>
 `;
 
