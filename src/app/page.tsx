@@ -1,9 +1,21 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useUser } from "../../shared/context/userContext";
 import Header from "./components/templates/header";
-//import { UseUser } from "@auth0/nextjs-auth0/dist/client/use-user";
 
 const Home = () => {
+  const { user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user !== null) {
+      router.push("/dashboard");
+    } else {
+      router.push("/auth/login");
+    }
+  }, []);
   return (
     <main className="flex  min-h-screen flex-col items-center bg-background1">
       <Header />
