@@ -8,7 +8,7 @@ const ProviderPage = () => {
   const [status, setStatus] = useState("Submit");
   const { user } = useUser();
   const [formData, setFormData] = useState<any>({
-    userId: user?._id,
+    userId: (user as any)._id,
     userName: user?.name,
     role: "provider",
     email: "",
@@ -30,7 +30,7 @@ const ProviderPage = () => {
     e.preventDefault();
     setStatus("Submitting...");
 
-    try {
+    /*try {
       const response = await axios.post("/api/v1/email", {
         userId: formData.userId,
         userName: formData.userName,
@@ -42,9 +42,26 @@ const ProviderPage = () => {
     } catch (err) {
       alert("Couldnt send information to provider");
       console.log("Error in sending to provider", err);
-    }
+    }*/
 
+    // Stroing provider information
+    setStatus("Storing");
     console.log(formData);
+    try {
+      const response = await axios.post("/api/v1/user/provider/", {
+        userId: formData.userId,
+        userName: formData.userName,
+        role: "provider",
+        email: formData.email,
+        from: formData.from,
+        to: formData.to,
+        status: "invited",
+      });
+      console.log(`Successful in adding provider information`, response);
+    } catch (err) {
+      alert("Couldnt add provider information");
+      console.log("Error in adding provider information", err);
+    }
     setStatus("Submit");
   };
 

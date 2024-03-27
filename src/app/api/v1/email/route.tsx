@@ -14,29 +14,26 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  console.log("1");
   sgMail.setApiKey(process.env.SENDGRID_EMAIL_API as string);
   const fromAddress = process.env.SENDGRID_FROM_EMAIL as string;
-  console.log("2");
 
   // const url = new URL(req.url);
 
   // const toAddress = url.searchParams.get("to");
 
   const { userId, userName, email, from, to } = await req.json();
-  console.log("3");
 
   const htmlContent = `
 <div class="invite-container">
   <h1>Verdascope is inviting you</h1>
-  <p>We're inviting you to join Trace X platform for following the product:</p>
+  <p>We're inviting you to join Verdascope platform for following the product:</p>
   <p>${userName} requested help completing Scope 1 and Scope 2 Data in relation to your energy consumption associated with their product. They are interested in the emissions data between ${from} and ${to}. </p>
   <p>Ready to get started? Click the button below to accept your invitation.</p>
   <a href="${process.env.vercelLink}" class="accept-button">Accept Invitation</a>
   <p>Already have an account? <a href="your-login-link.com">Log in here.</a></p>
 </div>
 `;
-  console.log("4", to);
+
   try {
     await sgMail.send({
       to: email as string, // Change to your recipient
@@ -45,7 +42,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       text: "Content",
       html: htmlContent,
     });
-    console.log("5");
 
     return NextResponse.json({
       message: "Sent email",

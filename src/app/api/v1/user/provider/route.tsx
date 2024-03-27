@@ -3,7 +3,7 @@ import { ProviderProfileModel } from "../../../../../../shared/models/user/provi
 import { NextApiRequest, NextApiResponse } from "next";
 import IProvider from "../../../../../../shared/interfaces/user/provider";
 
-// /api/v1/provider/
+// /api/v1/user/provider/
 
 // Response Data
 type ResponseData = {

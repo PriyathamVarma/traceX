@@ -14,18 +14,26 @@ const UserContext = createContext<{
 
 export const UserProvider = ({ children }: any) => {
   const [user, setUser] = useState<IUserProfile | null>(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    if (typeof localStorage !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      return storedUser ? JSON.parse(storedUser) : null;
+    } else {
+      return null;
+    }
   });
 
   const login = (userData: IUserProfile) => {
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("user");
+    if (typeof localStorage !== "undefined") {
+      localStorage.removeItem("user");
+    }
   };
 
   return (
