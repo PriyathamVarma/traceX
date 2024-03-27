@@ -17,7 +17,7 @@ import { useEffect } from "react";
 const Dashboard = () => {
   const { user } = useUser();
 
-  console.log("Logged in user details : \n", user);
+  // console.log("Logged in user details : \n", user);
 
   // useEffect
 

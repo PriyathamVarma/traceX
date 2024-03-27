@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useUser } from "../../../../../../shared/context/userContext";
 //import { useUser } from "@auth0/nextjs-auth0/client";
 
 const SignupForm = () => {
   const router = useRouter();
-  //const { user, isLoading } = useUser();
+  const { login } = useUser();
 
   // State
   const [error, setError] = useState("");
@@ -35,11 +36,13 @@ const SignupForm = () => {
         password: password,
       });
 
-      console.log("Succesfully created account", response.status);
+      console.log("Succesfully created account", response);
 
       setStart("Create Account");
       if (response.status === 200) {
-        router.push("/");
+        const userData = response.data.data;
+        login(userData);
+        router.push("/dashboard");
       }
     } catch (err) {
       console.log("Error in getting user details", err);

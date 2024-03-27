@@ -44,7 +44,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     return NextResponse.json<ResponseData>({
       message: "Succesfully created User Profile",
-      data: existingUser,
+      data: newDeveloperProfileService,
     });
   } catch (error) {
     return NextResponse.json({

@@ -8,8 +8,19 @@ import { CiBellOn } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import logo from "../../../../public/images/VERDASCOPE.png";
 import pfp from "../../../../public/images/Avatar.png";
+import { useUser } from "../../../../shared/context/userContext";
 
 const Header = () => {
+  // User Details
+  const { user, logout } = useUser();
+
+  console.log("logged in user details : \n", user);
+
+  //Methods
+  const clickHandler = () => {
+    logout();
+  };
+
   return (
     <header className="bg-background6 shadow-full h-18 flex flex-row py-2 w-full">
       <div className="container mx-auto flex items-center justify-center space-x-2">
@@ -35,9 +46,22 @@ const Header = () => {
           <Link href="/" className="bg-white p-2 rounded-sm">
             <CiBellOn />
           </Link>
-          <Link href="/auth/login" className="bg-white p-2 rounded-sm text-xs">
-            Login
-          </Link>
+          {user !== null ? (
+            <button
+              onClick={clickHandler}
+              className="bg-white p-2 rounded-sm text-xs"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              href="/auth/login"
+              className="bg-white p-2 rounded-sm text-xs"
+            >
+              Login
+            </Link>
+          )}
+
           <Image
             src={pfp}
             width={30}
