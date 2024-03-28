@@ -47,8 +47,9 @@ const ReportPage = () => {
                 <th className="p-2 border border-white">Activity</th>
                 <th className="p-2 border border-white">Category</th>
                 <th className="p-2 border border-white">Emission Source</th>
-                <th className="p-2 border border-white">Kg CO2e</th>
+                <th className="p-2 border border-white">Usage</th>
                 <th className="p-2 border border-white">Timeframe</th>
+                <th className="p-2 border border-white">Emissions (kg CO2e)</th>
                 <th className="p-2 border border-white">Verification</th>
               </tr>
             </thead>
@@ -71,9 +72,9 @@ const ReportPage = () => {
                       {item.type}
                     </td>
                     <td className="p-2 border border-background1">
-                      {item.totalConsumption}
+                      {item.totalConsumption} {item.units}
                     </td>
-                    <td className="p-2 border border-background1">
+                    <td className="p-2 border border-background1 text-sm">
                       {fromDate.toLocaleDateString("en-US", {
                         month: "2-digit",
                         day: "2-digit",
@@ -86,7 +87,10 @@ const ReportPage = () => {
                         year: "numeric",
                       })}
                     </td>
-                    <td className="p-2 border border-background1">
+                    <td className="p-2 border border-background1 text-xs">
+                      {item.factor * item.totalConsumption}
+                    </td>
+                    <td className="p-2 border border-background1 text-xs">
                       Self-verification
                     </td>
                   </tr>

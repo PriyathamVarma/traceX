@@ -19,6 +19,7 @@ const ActivityForm = (props: any) => {
   const [emissionsTypesList, setEmissionsTypesList] = useState([]);
   const [isProvider, setIsProvider] = useState(false);
   const [status, setStatus] = useState("Submit");
+  const [multFactor, setMultFactor] = useState(false);
   const [formData, setFormData] = useState<any>({
     userId: (user as any)._id,
     mainUserId: "",
@@ -33,6 +34,7 @@ const ActivityForm = (props: any) => {
     verification: "self-verification", // self-verification
     from: "",
     to: "",
+    factor: "",
   });
 
   const [providerData, setProviderData] = useState<any>(null);
@@ -95,33 +97,54 @@ const ActivityForm = (props: any) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setStatus("Submitting");
-    console.log("Form data \n", formData);
-    try {
-      const response = await axios.post("/api/v1/data", {
-        userId: formData.userId,
-        mainUserId: formData.mainUserId,
-        mainUserName: formData.mainUserName,
-        category: formData.category, // Fuel
-        scope: formData.scope, // 1 or 2 or 3
-        activity: formData.activity, // Gaseous Fuel
-        type: formData.type, // Butane
-        units: formData.units, // tonnes
-        totalConsumption: formData.totalConsumption,
-        methodology: formData.methodology,
-        verification: formData.verification, // self-verification
-        from: formData.from,
-        to: formData.to,
-      });
 
-      console.log("Succesful in saving provider data \n", response);
-      if (response.status === 200) {
-        alert("Data saved");
-        setStatus("Submitted");
-        router.push("/verification");
+    try {
+      const res = await axios.get(
+        `/api/v1/admin/emissions/getById?scope=${formData.scope}&category=${formData.category}&activity=${formData.activity}&type=${formData.type}&units=${formData.units}`,
+      );
+
+      console.log("Fetched multiplication factor", res.data.data.value);
+      if (res.status === 200) {
+        formData.factor = res.data.data.value;
+        setMultFactor(true);
+      } else {
+        alert("No associated data with us");
       }
-    } catch (err: any) {
-      alert(err.response.data);
-      console.log("Error in saving the data", err.response.data);
+    } catch (err) {
+      console.log("Cant get multiplication factor", err);
+      alert("Data mismatch. Try different data");
+    }
+
+    if (multFactor) {
+      console.log("Form data \n", formData);
+      try {
+        const response = await axios.post("/api/v1/data", {
+          userId: formData.userId,
+          mainUserId: formData.mainUserId,
+          mainUserName: formData.mainUserName,
+          category: formData.category, // Fuel
+          scope: formData.scope, // 1 or 2 or 3
+          activity: formData.activity, // Gaseous Fuel
+          type: formData.type, // Butane
+          units: formData.units, // tonnes
+          totalConsumption: formData.totalConsumption,
+          methodology: formData.methodology,
+          verification: formData.verification, // self-verification
+          from: formData.from,
+          to: formData.to,
+          factor: formData.factor,
+        });
+
+        console.log("Succesful in saving provider data \n", response);
+        if (response.status === 200) {
+          alert("Data saved");
+          setStatus("Submitted");
+          router.push("/verification");
+        }
+      } catch (err: any) {
+        alert(err.response.data);
+        console.log("Error in saving the data", err.response.data);
+      }
     }
     setStatus("Submit");
   };

@@ -49,4 +49,5 @@ export default interface IDataByProvider {
   verification: string; // self-verification
   from: Date;
   to: Date;
+  factor: number; // Multiplication factor
 }

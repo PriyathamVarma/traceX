@@ -21,6 +21,7 @@ const ProviderDataSchema: Schema = new Schema(
     verification: { type: String, required: true },
     from: { type: Date, required: true },
     to: { type: Date, required: true },
+    factor: { type: Number, required: true },
   },
   { timestamps: true },
 );

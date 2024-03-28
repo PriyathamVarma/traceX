@@ -6,7 +6,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useUser } from "../../../../../../shared/context/userContext";
-//import { useUser } from "@auth0/nextjs-auth0/client";
+import logo from "../../../../../../public/images/VERDASCOPE.png";
+import Image from "next/image";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -53,6 +54,7 @@ const SignupForm = () => {
   return (
     <div className="flex items-center justify-center bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-96 space-y-8">
+        <Image src={logo} alt="logo" />
         <div>
           <h2 className="mt-6 text-left text-4xl font-extrabold">Signup</h2>
           <h3 className="mt-6 text-left text-xl font-medium">
