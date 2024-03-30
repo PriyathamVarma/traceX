@@ -26,7 +26,7 @@ Tech Stack:💻
 * Third Party
 
 - Sendgrid(Email notifications)
-- Auth0(For authentication)
+
 
 * Deployment
 
